@@ -20,9 +20,9 @@ import XLSX from "xlsx";
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
   );
 
-  const baseURL = "https://specsonline.com/product-category/wine";
-  //const baseURL = "https://specsonline.com/product-category/spirits/";
-  const MAX_PAGES = 420;
+  const baseURL = "https://specsonline.com/product-category/wine";// this is for wine 
+  //const baseURL = "https://specsonline.com/product-category/spirits/";// this is for spirits 
+  const MAX_PAGES = 420; // for spirits 492 pages 
 
   let products = [];
   let pageNum = 1;
