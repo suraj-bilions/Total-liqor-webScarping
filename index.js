@@ -1,22 +1,18 @@
 import express from "express";
-
-import totalwineWine from "./routes/totalwineWine.route.js";
-import totalwineSpirits from "./routes/totalwineSpirits.route.js";
-import specsWine from "./routes/specsWine.route.js";
-import specsSpirits from "./routes/specsSpirits.route.js";
+import allScrapersRoute from "./routes/allScrapers.route.js";
 
 const app = express();
 
-app.use("/scrape/totalwine/wine", totalwineWine);
-app.use("/scrape/totalwine/spirits", totalwineSpirits);
-app.use("/scrape/specs/wine", specsWine);
-app.use("/scrape/specs/spirits", specsSpirits);
+/* 🔥 route prefix */
+app.use("/scrape", allScrapersRoute);
 
-app.listen(3000, () =>
-  console.log("🚀 Server running on http://localhost:3000"),
-  console.log("🚀 Server running on http://localhost:3000/scrape/totalwine/wine"),
-  console.log("🚀 Server running on http://localhost:3000/scrape/totalwine/spirits"),
-  console.log("🚀 Server running on http://localhost:3000/scrape/specs/wine"),
-  console.log("🚀 Server running on http://localhost:3000/scrape/specs/spirits"),
+const PORT = 3000;
 
-);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`👉 TotalWine Wine:     http://localhost:${PORT}/scrape/totalwine/wine`);
+  console.log(`👉 TotalWine Spirits:  http://localhost:${PORT}/scrape/totalwine/spirits`);
+  console.log(`👉 Specs Wine:         http://localhost:${PORT}/scrape/specs/wine`);
+  console.log(`👉 Specs Spirits:      http://localhost:${PORT}/scrape/specs/spirits`);
+});
+
