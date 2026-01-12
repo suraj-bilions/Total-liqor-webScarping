@@ -15,4 +15,3 @@ app.listen(PORT, () => {
   console.log(`👉 Specs Wine:         http://localhost:${PORT}/scrape/specs/wine`);
   console.log(`👉 Specs Spirits:      http://localhost:${PORT}/scrape/specs/spirits`);
 });
-

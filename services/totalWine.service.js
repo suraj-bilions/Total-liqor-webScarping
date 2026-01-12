@@ -14,10 +14,12 @@ export async function scrapeTotalWineService(baseURL, type) {
   });
 
   const page = await browser.newPage();
-  let products = [];
-  let pageNum = 1;
 
-  while (pageNum<=2) {
+  let pageNum = 1;
+  let batchProducts = [];
+  const BATCH_SIZE = 50;
+
+  while (true) {
     const url =
       pageNum === 1
         ? baseURL
@@ -46,7 +48,23 @@ export async function scrapeTotalWineService(baseURL, type) {
     );
 
     if (pageProducts.length === 0) break;
-    products.push(...pageProducts);
+
+    batchProducts.push(...pageProducts);
+
+    /* ✅ SAVE EVERY 50 PAGES */
+    if (pageNum % BATCH_SIZE === 0) {
+      console.log(`💾 Saving pages ${pageNum - 49} → ${pageNum}`);
+
+      saveData(
+        batchProducts,
+        `totalwine_${type}.json`,
+        `totalwine_${type}.xlsx`,
+        `${type} Products`,
+        true // append mode
+      );
+
+      batchProducts = []; // clear memory
+    }
 
     const hasNext = await page.evaluate(() => {
       const nextBtn = document.querySelector(
@@ -56,16 +74,23 @@ export async function scrapeTotalWineService(baseURL, type) {
     });
 
     if (!hasNext) break;
+
     pageNum++;
   }
 
-  saveData(
-    products,
-    `totalwine_${type}.json`,
-    `totalwine_${type}.xlsx`,
-    `${type} Products`
-  );
+  /* ✅ SAVE REMAINING PRODUCTS */
+  if (batchProducts.length) {
+    console.log("💾 Saving remaining products");
+
+    saveData(
+      batchProducts,
+      `totalwine_${type}.json`,
+      `totalwine_${type}.xlsx`,
+      `${type} Products`,
+      true
+    );
+  }
 
   await browser.close();
-  return products;
+  console.log("✅ Scraping completed");
 }

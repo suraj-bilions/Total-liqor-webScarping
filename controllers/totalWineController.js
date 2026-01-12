@@ -1,3 +1,4 @@
+
 import { scrapeTotalWineService } from "../services/totalWine.service.js";
 
 export async function scrapeTotalWine(baseURL, type) {
